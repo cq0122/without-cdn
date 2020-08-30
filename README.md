@@ -31,15 +31,15 @@ $ withoutcdn -f D:\\Github\\theme\\build\\index.html -d static/js/
 const withoutCDN = require("without-cdn");
 
 withoutCDN({
-	filepath: "build/index.html"
+    filepath: "build/index.html"
 });
 
 // config
 withoutCDN({
-	log: true|false, //logs on | off
-	filepath: string, //the file path that to be processed
-	exclude: string | string[], //exclude the CDN paths
-	folder: string //destination folder for the CDN file
+    log: true|false, //logs on | off
+    filepath: string, //the file path that to be processed
+    exclude: string | string[], //exclude the CDN paths
+    folder: string //destination folder for the CDN file
 });
 ```
 
@@ -47,14 +47,13 @@ withoutCDN({
 import withoutCDN from "without-cdn";
 
 withoutCDN({
-	filepath: "build/index.html"
+    filepath: "build/index.html"
 });
 ```
 
-
 ### Use in Project build.
 
-#####   💙 Add withoutCDN function in  build.js
+##### 💙 Add withoutCDN function in build.js
 
 ```
 // scripts/build.js, search 'Compiled successfully', add call withoutCDN
@@ -66,11 +65,11 @@ const withoutCDN = require("without-cdn");
 ...
 ...
 } else {
-	console.log(chalk.green("Compiled successfully.\n"));
+    console.log(chalk.green("Compiled successfully.\n"));
 }
 
 withoutCDN({
-	filepath: "build/index.html"
+    filepath: "build/index.html"
 });
 
 console.log("File sizes after gzip:\n");
@@ -78,7 +77,7 @@ console.log("File sizes after gzip:\n");
 ...
 ```
 
-#####   💙 Global install，use postbuild scripts
+##### 💙 Global install，use postbuild scripts
 
 ```
 // pacage.json, add postbuild script
