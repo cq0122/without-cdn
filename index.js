@@ -137,12 +137,19 @@ export const withoutCDN = function (config) {
     .replace(/\\/g, "/")
     .substring(0, filepath.replace(/\\/g, "/").lastIndexOf("/") + 1);
   let localDest = "./";
-  if (folder) {
-    dest = dest + String(folder) + "/";
-    localDest = localDest + String(folder) + "/";
+  if (folder && String(folder)) {
+    let folderStr = String(folder).replace(/\\/g, "/");
+    if (folderStr.startsWith("/")) {
+      folderStr = folderStr.substring(1);
+    }
+    if (folderStr.endsWith("/")) {
+      folderStr = folderStr.substring(0, folderStr.length - 1);
+    }
+    dest = dest + folderStr + "/";
+    localDest = localDest + folderStr + "/";
   }
   if (!fs.existsSync(dest)) {
-    fs.mkdirSync(dest);
+    fs.mkdirSync(dest, { recursive: true });
   }
   httpUrlArr.forEach((url) => {
     if (!excludeHttpUrlArr.includes(url)) {

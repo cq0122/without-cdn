@@ -1,6 +1,6 @@
 {
   "name": "without-cdn",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Web projects are deployed to a server, sometimes running on a LAN, and the CDN reference needs to be removed during deployment",
   "main": "lib/index.js",
   "scripts": {
