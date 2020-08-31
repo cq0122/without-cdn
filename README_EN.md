@@ -14,7 +14,7 @@ If you also encounter some embarrassments in the process of development, I sugge
 $npm install -g without-cdn
 ```
 
-### without-cdn Advantages & Working principles
+### Advantages & Working principles
 
 Advantage:
 ​ CDN resources can be used in the development process. Instead of downloading CDN resources locally, the resource version can be changed by modifying the URL, and the CDN resources can be downloaded and replaced only when the project is deployed

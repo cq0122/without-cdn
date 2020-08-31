@@ -1,12 +1,10 @@
 # without-cdn
 
-Web项目使用CDN资源能加速项目的访问，但是有时候项目部署在内网或者我们选用的CDN不稳定，就会出现项目部署后无法正常运行的尴尬情况。
+Web 项目使用 CDN 资源能加速项目的访问，但是有时候项目部署在内网或者我们选用的 CDN 不稳定，就会出现项目部署后无法正常运行的尴尬情况。
 
-把CDN资源全部放在本地，项目中就会多出一些额外的目录和文件（这些文件万年不需要修改，一不小心点开还可能被编辑器格式化了），而且还需要提交进代码库，当需要对引用CDN资源升级或者更换版本时，又需要重复去下载对应的资源提交到项目中，还需要移除之前的版本文件。
+把 CDN 资源全部放在本地，项目中就会多出一些额外的目录和文件（这些文件万年不需要修改，一不小心点开还可能被编辑器格式化了），而且还需要提交进代码库，当需要对引用 CDN 资源升级或者更换版本时，又需要重复去下载对应的资源提交到项目中，还需要移除之前的版本文件。
 
-如果你开发的过程中也碰到过上面的小尴尬，建议你试试without-cdn，说不定能带给你一点小惊喜。
-
-
+如果你开发的过程中也碰到过上面的小尴尬，建议你试试 without-cdn，说不定能带给你一点小惊喜。
 
 ### 安装 without-cdn
 
@@ -16,21 +14,17 @@ Web项目使用CDN资源能加速项目的访问，但是有时候项目部署�
 $npm install -g without-cdn
 ```
 
-
-
-### without-cdn 优势&工作原理
+### 优势&工作原理
 
 优势：
 
-​	开发过程中可以使用CDN资源，CDN资源不用下载到本地，修改url即可更换资源版本，且仅在项目部署时下载和替换CDN资源
+​ 开发过程中可以使用 CDN 资源，CDN 资源不用下载到本地，修改 url 即可更换资源版本，且仅在项目部署时下载和替换 CDN 资源
 
 工作原理：
 
-1. 对需要处理的文件中script和link标签进行提取，分析出以http开头的url
-1. 将提取的http url列表下载到指定的本地目录
-1. 更换文件中的http url
-
-
+1. 对需要处理的文件中 script 和 link 标签进行提取，分析出以 http 开头的 url
+1. 将提取的 http url 列表下载到指定的本地目录
+1. 更换文件中的 http url
 
 ### 命令行使用
 
@@ -44,7 +38,7 @@ Options:
   -d --folder <string>    destination folder for the CDN file
   -lo --logsoff           logs off
   -h, --help              display help for command
-  
+
 Options:
   -V, --version           显示版本
   -f --filepath <string>  必填参数，需要处理的文件路径，注意路径是否有效（使用\\或/），支持全路径、相对路径
@@ -74,11 +68,9 @@ download https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js successful
 <!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="./static/jquery.min.js"></script><script src="./static/font_2031940_kylw1ml1bn.js"></script><style>...
 ```
 
+### JS 中使用
 
-
-### JS中使用
-
-```
+````
 ​```
 const withoutCDN = require("without-cdn");
 
@@ -97,13 +89,11 @@ withoutCDN({
 });
 
 ​```
-```
+````
 
+### React 项目打包时使用 without-cdn
 
-
-### React项目打包时使用without-cdn
-
-方法一：全局安装without-cdn，在package.json的scripts中使用post钩子，推荐使用该方法
+方法一：全局安装 without-cdn，在 package.json 的 scripts 中使用 post 钩子，推荐使用该方法
 
 ```
 // "postbuild": "withoutcdn -f build/index.html -d static",
@@ -121,8 +111,7 @@ withoutCDN({
 },
 ```
 
-
-方法二： 在项目中安装，在scripts/build.js中调用
+方法二： 在项目中安装，在 scripts/build.js 中调用
 
 ```
 // scripts/build.js, 在checkBrowsers()的最后一个then()中调用withoutCDN
@@ -158,7 +147,5 @@ checkBrowsers(paths.appPath, isInteractive)
 ...
 ...
 ```
-
-
 
 > Hope you will like !
