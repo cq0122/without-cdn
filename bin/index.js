@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require("commander");
-program.version("1.0.0");
+program.version("1.2.0");
 
 program
   .requiredOption(
