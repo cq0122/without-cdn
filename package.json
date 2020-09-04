@@ -1,12 +1,17 @@
 {
   "name": "without-cdn",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Web projects are deployed to a server, sometimes running on a LAN, and the CDN reference needs to be removed during deployment",
   "main": "lib/index.js",
+  "bin": {
+    "withoutcdn": "lib/cli.js"
+  },
   "scripts": {
-    "uglify-js": "uglifyjs lib/index.js -o lib/index.js",
-    "babel-js": "babel index.js -o lib/index.js",
-    "build": "npm-run-all babel-js uglify-js"
+    "uglify-js": "uglifyjs lib/index.js -o lib/index.js && uglifyjs lib/cli.js -o lib/cli.js",
+    "babel-js": "babel index.js cli.js -d lib",
+    "build": "npm-run-all babel-js uglify-js",
+    "prenpmjs": "rm -rf npmjs && mkdir npmjs && cd npmjs && mkdir lib",
+    "npmjs": "cp {LICENSE,README.md,package.json} npmjs/ && cp lib/*.js npmjs/lib/"
   },
   "keywords": [
     "without-cdn",
@@ -18,9 +23,6 @@
     "url": "https://github.com/cq0122/without-cdn/issues"
   },
   "license": "MIT",
-  "bin": {
-    "withoutcdn": "bin/index.js"
-  },
   "devDependencies": {
     "babel-preset-es2015": "^6.24.1",
     "babel-cli": "^6.26.0"

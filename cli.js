@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { program } = require("commander");
-program.version("1.2.0");
+program.version("1.3.0");
 
 program
   .requiredOption(
@@ -18,7 +18,7 @@ program
 
 const { logsoff, filepath, exclude, folder } = program.opts();
 
-var withoutCDN = require("../lib/index");
+const withoutCDN = require("../lib/index");
 
 withoutCDN({
   log: !logsoff,
