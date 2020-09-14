@@ -18,7 +18,7 @@ $npm install -g without-cdn
 
 优势：
 
-​ ​ ​ ​ 开发过程中可以使用 CDN 资源，CDN 资源不用下载到本地，修改 url 即可更换资源版本，且仅在项目部署时下载和替换 CDN 资源
+- 开发过程中可以使用 CDN 资源，CDN 资源不用下载到本地，修改 url 即可更换资源版本，且仅在项目部署时下载和替换 CDN 资源
 
 工作原理：
 
@@ -37,6 +37,7 @@ Options:
   -e --exclude <string>   exclude the CDN path, multiple paths use commas to separate
   -d --folder <string>    destination folder for the CDN file
   -lo --logsoff           logs off
+  -r --relative           is the CDN file path relative to the processed file
   -h, --help              display help for command
 
 Options:
@@ -45,13 +46,21 @@ Options:
   -e --exclude <string>   忽略的路径，支持配置多个路径，用半角逗号分割。例如项目中使用了多个CDN，自建的CDN路径不需要下载替换，可以配置exclude。
   -d --folder <string>    CDN文件下载的目录名称，如不存在会在处理文件的同一路径下创建
   -lo --logsoff           是否打印日志，加上-lo或--logsoff关闭日志输出
+  -r --relative           CDN文件下载后，使用相对路径引用还是绝对路径引用
   -h, --help              显示帮助
+```
 
+###### 项目build后的index.html（使用了 `bootcdn` 的 jquery文件 和 `alicdn` 的 font文件）
 
-// build后的index.html，使用了bootcdn的jquery和alicdn的font文件
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js"></script><script src="http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js"></script>.....
+```
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js"></script><script src="http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js"></script>
+...
+...
+```
 
-// 使用withoutcdn处理index.html
+###### 使用withoutcdn处理index.html
+
+```
 $ withoutcdn -f ./index.html -d static
 
 withoutCDN start...
@@ -63,23 +72,28 @@ http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js
 download http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js successfully.
 
 download https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js successfully.
+```
 
-// 处理后的index.html，同时./static目录下多出了font_2031940_kylw1ml1bn.js jquery.min.js
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="./static/jquery.min.js"></script><script src="./static/font_2031940_kylw1ml1bn.js"></script><style>...
+###### 处理后的index.html （static目录下多出了`font_2031940_kylw1ml1bn.js`  `jquery.min.js`）
+
+```
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="/static/jquery.min.js"></script><script src="/static/font_2031940_kylw1ml1bn.js"></script><style>
+...
+...
 ```
 
 ### JS 中使用
 
-````
-​```
+```
 const withoutCDN = require("without-cdn");
 
 // 参数说明
 withoutCDN({
-    log: boolean,               // 是否打印日志
+    log: boolean,               // 是否打印日志，默认打印
     filepath: string,           // 必填参数，需要处理的文件路径，注意路径是否有效（使用\\或/），支持全路径、相对路径
     exclude: string | string[], // 忽略的路径,支持使用数组配置多个路径
-    folder: string              // CDN文件下载的目录名称，如不存在会在处理的文件同一路径下创建
+    folder: string,             // CDN文件下载的目录名称，如不存在会在处理的文件同一路径下创建
+    relative: boolean           // CDN文件下载后，使用相对路径引用还是绝对路径引用，默认绝对路径
 });
 
 
@@ -87,9 +101,7 @@ withoutCDN({
     filepath: "build/index.html",
     folder: "static"
 });
-
-​```
-````
+```
 
 ### React 项目打包时使用 without-cdn
 

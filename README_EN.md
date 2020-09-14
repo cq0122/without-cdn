@@ -17,7 +17,7 @@ $npm install -g without-cdn
 ### Advantages & Working principles
 
 Advantage:
-​ CDN resources can be used in the development process. Instead of downloading CDN resources locally, the resource version can be changed by modifying the URL, and the CDN resources can be downloaded and replaced only when the project is deployed
+- CDN resources can be used in the development process. Instead of downloading CDN resources locally, the resource version can be changed by modifying the URL, and the CDN resources can be downloaded and replaced only when the project is deployed
 
 Working principle:
 
@@ -36,12 +36,21 @@ Options:
   -e --exclude <string>   exclude the CDN path, multiple paths use commas to separate
   -d --folder <string>    destination folder for the CDN file
   -lo --logsoff           logs off
+  -r --relative           is the CDN file path relative to the processed file  
   -h, --help              display help for command
+```
 
-// After building index.html，bootcdn jquery and alicdn font files are used
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js"></script><script src="http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js"></script>.....
+###### after building the index.html（use `bootcdn` ‘  jquery file and `alicdn` ’ font file）
 
-// user withoutcdn
+```
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js"></script><script src="http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js"></script>
+...
+...
+```
+
+###### user withoutcdn
+
+```
 $ withoutcdn -f ./index.html -d static
 
 withoutCDN start...
@@ -53,15 +62,19 @@ http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js
 download http://at.alicdn.com/t/font_2031940_kylw1ml1bn.js successfully.
 
 download https://cdn.bootcdn.net/ajax/libs/jquery/2.1.2/jquery.min.js successfully.
+```
 
-// After processing the index.html， Also./static directory has added font_2031940_kylw1ml1bn.js jquery.min.js
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="./static/jquery.min.js"></script><script src="./static/font_2031940_kylw1ml1bn.js"></script><style>...
+###### after processing the index.html（static directory has added`font_2031940_kylw1ml1bn.js`  `jquery.min.js`）
+
+```
+<!doctype html><html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/><link rel="shortcut icon" href="/favicon.ico"/><title>XXXX有限公司</title><script src="/static/jquery.min.js"></script><script src="/static/font_2031940_kylw1ml1bn.js"></script><style>
+...
+...
 ```
 
 ### use in JS
 
 ````
-​```
 const withoutCDN = require("without-cdn");
 
 // 参数说明
@@ -69,7 +82,8 @@ withoutCDN({
     log: boolean,               // Print logs
     filepath: string,           // Required parameters, file path to be processed, note whether the path is valid (using \\ or /), support full path, relative path
     exclude: string | string[], // Ignored path, support for using arrays to configure multiple paths
-    folder: string              // The directory name of the CDN file downloaded, if it does not exist, will be created under the same path as the file being processed
+    folder: string,             // The directory name of the CDN file downloaded, if it does not exist, will be created under the same path as the file being processed
+    relative: boolean           // Is the CDN file path relative to the processed file
 });
 
 
@@ -77,8 +91,6 @@ withoutCDN({
     filepath: "build/index.html",
     folder: "static"
 });
-
-​```
 ````
 
 ### use in build react project
